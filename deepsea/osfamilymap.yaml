@@ -2,18 +2,26 @@
 # vim: ft=yaml
 
 Suse:
+  use_upstream_repo: True
   use_upstream_pkgrepo: False
   use_upstream_gitrepo: True
-  osname: openSUSE_Leap
   repo:
-    base_uri: https://download.opensuse.org/repositories/filesystems:ceph:
+    name: 'Filesystem tools and FUSE-related packages (openSUSE_Leap_$releasever)'
+    base_url: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_$releasever/$basearch'
+    key_url: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_42.3/repodata/repomd.xml.key'
   user: salt
   group: salt
+  services:
+    running:
+      - salt-master
+      - salt-minion
+    dead:
+      - apparmor
+      - SuSEfirewall2
 
 Debian:
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula manages
-    # 'wanted' packages. Otherwise this formuala is responsible.
+    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
     formula: False
     required:
       - python3-setuptools

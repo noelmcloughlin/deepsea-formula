@@ -3,53 +3,89 @@
 
 {% from "deepsea/map.jinja" import deepsea with context -%}
 
-deepsea-user-group:
-  group.present:
-    - name: {{ deepsea.group }}
-    - system: True
-  user.present:
-    - name: {{ deepsea.user }}
-    - groups:
-      - {{ deepsea.group }}
-    - system: True
-    - require:
-      - group: deepsea-user-group
-    - require_in:
-      - pkg: deepsea-requirements
+include:
+  - deepsea.config
 
 deepsea-requirements:
-   {% if not deepsea.packages.formula %}
+   {% if deepsea.use_upstream_pkgrepo and not deepsea.packages.formula  %}
   pkg.installed:
     - pkgs: {{ deepsea.packages.required }}
     - require_in:
       - file: deepsea-requirements
    {% endif %}
-  file.managed:
-    names:
-     -  /etc/salt/master.d
-     - {{ deepsea.tmpdir }}
-    mode: 0755
-    user: {{ deepsea.user }}
-    group: {{ deepsea.group }}
-    recurse:
-      - user
-      - group
-      - mode
+  file.directory:
+    - names:
+       - /etc/salt/master.d
+       - {{ deepsea.tmpdir }}
+    - force: True
+    - mode: 0755
+    - user: {{ deepsea.user }}
+    - group: {{ deepsea.group }}
+    - recurse:
+       - user
+       - group
+       - mode
 
-deepsea-installation:
+     {% for svc in deepsea.services.running %}
+deepsea-run-service-{{ svc }}:
+  service.running:
+    - name: {{ svc }}
+    - enable: True
+    - require:
+      - file: deepsea-requirements
+     {% endfor %}
+
+     {% for svc in deepsea.services.dead %}
+deepsea-stop-service-{{ svc }}:
+  service.dead:
+    - name: {{ svc }}
+    - enable: False
+    - require:
+      - file: deepsea-requirements
+     {% endfor %}
+
+deepsea-software:
    {% if deepsea.use_upstream_pkgrepo %}
+        {# using upstream pkgrepo #}
+  pkgrepo.managed:
+    - name: deepsea-{{ deepsea.release }}
+    - humanname: {{ deepsea.repo.name }}
+    - baseurl: {{ deepsea.repo.base_url }}
+    - key_url: {{ deepsea.repo.key_url }}
+    - gpgcheck: 1
+    - gpgautoimport: True
+    - require:
+      - file: deepsea-requirements
   pkg.installed:
     - pkgs: {{ deepsea.packages.required }}
+    - require:
+      - pkgrepo: deepsea-software
    {% else %}
+        {# using gitrepo not upstream pkgrepo #}
+  pkgrepo.absent:
+    - name: deepsea-{{ deepsea.release }}
+    - require_in:
+      - file: deepsea-software
+  file.absent:
+    - name: {{ deepsea.tmpdir }}/DeepSea
+    - require_in:
+      - git: deepsea-software
   git.latest:
-    - name: {{ deepsea.repo.giturl }}
+    - name: {{ deepsea.repo.git_url }}
     - target: {{ deepsea.tmpdir }}/DeepSea
     - rev: {{ deepsea.repo.get('git_rev', 'master') }}
     - force_checkout: True
     - force_clone: True
     - force_fetch: True
     - force_reset: True
+    - require_in:
+      - cmd: deepsea-software
+  cmd.run:
+    - name: make install
+    - cwd: {{ deepsea.tmpdir }}/DeepSea
    {% endif %}
     - require:
-      - pkg: deepsea-requirements
-
+      - file: deepsea-requirements
+      - pkgrepo: deepsea-software
+    - require_in:
+      - file: deepsea-config-global

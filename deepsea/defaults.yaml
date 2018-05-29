@@ -6,7 +6,6 @@ deepsea:
   package: deepsea
   use_upstream_pkgrepo: False
   use_upstream_gitrepo: True
-  dev_env: True
   tmpdir: /tmp/deepsea_tmp
   user: root
   group: root
@@ -18,18 +17,22 @@ deepsea:
     git_rev: master
  
   services:
-    ntpd: True
-    apparmor: False
-    SuSEfirewall2: False
-    salt-master: True
-    salt-minion: True
+    running:
+      - salt-master
+      - salt-minion
+    dead:
+      - apparmor
+
+  config:
+    global: /srv/pillar/ceph/stack/global.yml
+    dev_env: True
 
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula manages
-    # 'wanted' packages. Otherwise this formula is responsible.
+    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
     formula: False
     required:
       - python3-setuptools
       - python3-click
       - python3-tox
       - salt-api
+

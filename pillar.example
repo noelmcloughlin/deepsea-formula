@@ -1,6 +1,6 @@
 deepsea:
   release: luminous
-  # Clone software from git (default)
+  # clone software from git (default)
   use_upstream_gitrepo: True
   use_upstream_pkgrepo: False
   dev_env: False
@@ -9,10 +9,10 @@ deepsea:
     git_url: https://git.example.com/repos/github/SUSE/DeepSea.git
     git_rev: experimental
  
-  services:
-    chrony: True
+  config:
+    global: /srv/pillar/ceph/stack/global.yml
+    dev_env: False
 
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula manages
-    # 'wanted' packages. By default, this formula manages required packages (False).
+    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
     formula: False
