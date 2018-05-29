@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+# vim: ft=jinja
+
+{% import_yaml 'deepsea/defaults.yaml' as defaults %}
+{% import_yaml 'deepsea/osmap.yaml' as osmap %}
+
+{## Use grains['grain'] based logic to build config model ##}
+
+{% set d = salt['grains.filter_by'](
+    defaults,
+    merge=salt['grains.filter_by'](
+        osfamilymap,
+        grain='os_family',
+        merge=salt['grains.filter_by']({
+             'Power': { 'myarch': '_Power', },
+             'default': { 'repoarch': '', },
+             grain='osarch',
+             merge=salt['pillar.get']('deepsea', {}),
+        ),
+    ),
+    base='deepsea',
+) %}
+
+# If base_url is required, but blank, calculate value of base_url
+# Currently this only applies to Suse on Power or X86_64
+# Everyone else uses the git repo
+
+{% if deepsea.use_upstream_pkgrepo and deepsea.repo.base_url == None %}
+      {% set baseurl = deepsea.repo.base_url ~ deepsea.release ~ "/" deepsea.osname ~ "_${releasever} + 
+                       deepsea.osarch + "/filesystems:ceph:" + deepsea.release + ".repo" %}
+      {% do deepsea.repo.update({ 'base_url': baseurl, }) %}
+{% endif %}
+

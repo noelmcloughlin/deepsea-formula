@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+
+Suse:
+  use_upstream_pkgrepo: False
+  use_upstream_gitrepo: True
+  osname: openSUSE_Leap
+  repo:
+    base_uri: https://download.opensuse.org/repositories/filesystems:ceph:
+  user: salt
+  group: salt
+
+Debian:
+  packages:
+    # Set True if https://github.com/saltstack-formulas/packages-formula manages
+    # 'wanted' packages. Otherwise this formuala is responsible.
+    formula: False
+    required:
+      - python3-setuptools
+      - python3-click
+      - python-tox
+      - salt-api
+

@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+
+deepsea:
+  release: luminous
+  package: deepsea
+  use_upstream_pkgrepo: False
+  use_upstream_gitrepo: True
+  dev_env: True
+  tmpdir: /tmp/deepsea_tmp
+  user: root
+  group: root
+
+  repo:
+    base_uri:
+    base_url:
+    git_url: https://github.com/SUSE/DeepSea.git
+    git_rev: master
+ 
+  services:
+    ntpd: True
+    apparmor: False
+    SuSEfirewall2: False
+    salt-master: True
+    salt-minion: True
+
+  packages:
+    # Set True if https://github.com/saltstack-formulas/packages-formula manages
+    # 'wanted' packages. Otherwise this formula is responsible.
+    formula: False
+    required:
+      - python3-setuptools
+      - python3-click
+      - python3-tox
+      - salt-api

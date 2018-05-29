@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+
+{# sample salt'ed makefile #}
+deepsea:
+  make:
+    pyc:
+     {% raw %}
+      - 'sed "s/DEVVERSION/"$(VERSION)"/" setup.py.in > setup.py'
+      - 'find srv/ -name "*.py" -exec python3 -m py_compile {} \;'
+      - 'find cli/ -name '*.py' -exec python3 -m py_compile {} \;'
+     {% endraw %}
+
+    install-deps:
+      - python3-setuptools
+      - python3-click
+      - python3-tox
+
+    copy-files:
+      dirs700:
+        # At runtime, these need to be owned by salt:salt.  This won't work
+        # in a buildroot on OBS,
+        - /srv/salt/ceph/admin/cache
+        - /srv/salt/ceph/ganesha/cache
+        - /srv/salt/ceph/igw/cache
+        - /srv/salt/ceph/mds/cache
+        - /srv/salt/ceph/mgr/cache
+        - /srv/salt/ceph/mon/cache
+        - /srv/salt/ceph/openattic/cache
+        - /srv/salt/ceph/osd/cache
+        - /srv/salt/ceph/rgw/cache
+        - /srv/salt/ceph/configuration/files/ceph.conf.checksum
+      dirs755:
+        - /usr/share/doc/packages
+        - /usr/lib/deepsea/qa/common
+        - /usr/lib/deepsea/qa/suites/basic
+        - /usr/lib/deepsea/qa/suites/ceph-test
+        - /srv/salt/ceph/tests/keyrings
+        - /srv/salt/ceph/tests/quiescent/timeout
+        - /usr/share/man/man1
+        - /usr/share/man/man5
+        - /usr/share/man/man7
+        - /usr/lib/deepsea/qa/common
+      files600:
+        # salt-master config files
+        - etc/salt/master.d/eauth.conf: /etc/salt/master.d/
+        - srv/salt/ceph/salt-api/files/sharedsecret.conf.j2: /etc/salt/master.d/sharedsecret.conf
+      files644:
+        - etc/salt: /etc/salt
+        - qa/: /usr/lib/deepsea/qa/
+        - srv/salt: /srv/salt/
+        - srv/pillar: /srv/pillar/
+        - srv/modules: /srv/modules/
+        - srv/__pycache__/*.pyc: /srv/__pycache__/
+        - man/*.1: /usr/lib/man/man1/
+        - man/*.5: /usr/lib/man/man5/
+        - man/*.7: /usr/lib/man/man7/
+        - LICENSE: /usr/share/doc/packages/deepsea/
+        - README: /usr/share/doc/packages/deepsea/
+        - doc: /usr/share/doc/packages/deepsea/
+      files700:
+        - etc/salt/master.d/eauth.conf: /etc/salt/master.d/
+        - srv/salt/ceph/salt-api/files/sharedsecret.conf.j2: /etc/salt/master.d/sharedsecret.conf
+      files755:
+        - qa/suites/basic/*.sh: /usr/lib/deepsea/qa/suites/basic/
+        - qa/suites/ceph-test/*.sh: /usr/lib/deepsea/qa/suites/ceph-test/
+    
+  packages:
+    - deepsea
+  cluster_name: deepsea
+  config:
+    global:
+      authentication_type: 'deepseax'
+  mon_hosts: []
+  osds:
+    active: []
+    removed: []
+
+  tmpdir: /tmp/deepseatmp
