@@ -31,8 +31,8 @@ deepsea:
     # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
     formula: False
     required:
-      - python3-setuptools
-      - python3-click
-      - python3-tox
+      - python-setuptools
+      - python-click
+      - python-tox
       - salt-api
 
