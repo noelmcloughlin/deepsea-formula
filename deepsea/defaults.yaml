@@ -34,4 +34,6 @@ deepsea:
       - python-click
       - python-tox
       - salt-api
+      - git
+      - make
 
