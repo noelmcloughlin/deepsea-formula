@@ -32,3 +32,11 @@ RedHat:
     running:
       - ntpd
       - salt-minion
+  packages:
+    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
+    formula: False
+    required:
+      - python-setuptools
+      - python-click
+      - python-tox
+      - salt-api

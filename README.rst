@@ -20,7 +20,7 @@ Available states
 
 Install DeepSea software on GNU Linux. Support git repo (default) or package repo (suse only). Includes the `config` state.
 
-Afterwards, consult the DeepSea documentation at <https://github.com/SUSE/DeepSea.git> and <https://www.suse.com/documentation/suse-enterprise-storage-5/singlehtml/book_storage_deployment/book_storage_deployment.html#ses.deployment>
+Afterwards, consult official DeepSea documentation at <https://github.com/SUSE/DeepSea.git> and <https://www.suse.com/documentation/suse-enterprise-storage-5/singlehtml/book_storage_deployment/book_storage_deployment.html#ses.deployment>
 
 ``deepsea.config``
 -----------------

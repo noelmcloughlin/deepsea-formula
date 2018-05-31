@@ -31,8 +31,6 @@ deepsea:
     formula: False
     required:
       - python-setuptools
-      - python-click
-      - python-tox
       - salt-api
       - git
       - make

@@ -7,9 +7,13 @@ include:
   - deepsea.config
 
 deepsea-requirements:
-   {% if deepsea.use_upstream_pkgrepo and not deepsea.packages.formula  %}
+   {% if not deepsea.packages.formula %}
   pkg.installed:
-    - pkgs: {{ deepsea.packages.required }}
+    - pkgs:
+      - make
+      {% for pkg in deepsea.packages.required %}
+      - {{ pkg }}
+      {% endfor %}
     - require_in:
       - file: deepsea-requirements
    {% endif %}
