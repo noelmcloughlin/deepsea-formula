@@ -2,7 +2,6 @@
 # vim: ft=yaml
 
 Suse:
-  use_upstream_repo: True
   use_upstream_pkgrepo: False
   use_upstream_gitrepo: True
   repo:
@@ -13,7 +12,6 @@ Suse:
   group: salt
   services:
     running:
-      - salt-master
       - salt-minion
     dead:
       - apparmor
@@ -24,8 +22,21 @@ Debian:
     # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
     formula: False
     required:
-      - python3-setuptools
-      - python3-click
+      - python-setuptools
+      - python-click
       - python-tox
       - salt-api
 
+RedHat:
+  services:
+    running:
+      - ntpd
+      - salt-minion
+  packages:
+    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
+    formula: False
+    required:
+      - python-setuptools
+      - python-click
+      - python-tox
+      - salt-api
