@@ -22,8 +22,8 @@ Meta-state runs all other states (except remove).
 
 Afterwards, consult official DeepSea documentation at <https://github.com/SUSE/DeepSea.git> and <https://www.suse.com/documentation/suse-enterprise-storage-5/singlehtml/book_storage_deployment/book_storage_deployment.html#ses.deployment>
 
-``install``
-------------
+``deepsea.install``
+-------------------
 
 Install DeepSea software on GNU Linux. Support git repo (default) or package repo (suse only). Includes the `config` and `service` states.
 
