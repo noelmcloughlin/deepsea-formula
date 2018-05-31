@@ -12,7 +12,6 @@ Suse:
   group: salt
   services:
     running:
-      - salt-master
       - salt-minion
     dead:
       - apparmor
@@ -28,3 +27,8 @@ Debian:
       - python-tox
       - salt-api
 
+RedHat:
+  services:
+    running:
+      - ntpd
+      - salt-minion

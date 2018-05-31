@@ -18,7 +18,6 @@ deepsea:
  
   services:
     running:
-      - salt-master
       - salt-minion
     dead:
       - apparmor
