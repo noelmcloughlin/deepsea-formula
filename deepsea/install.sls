@@ -6,18 +6,11 @@
 include:
   - deepsea.config
   - deepsea.service
-
-deepsea-requirements:
-   {% if not deepsea.packages.formula %}
-  pkg.installed:
-    - pkgs:
-      - make
-      {% for pkg in deepsea.packages.required %}
-      - {{ pkg }}
-      {% endfor %}
-    - require_in:
-      - file: deepsea-requirements
+   {% if deepsea.packages.managed %}
+  - deepsea.packages
    {% endif %}
+
+deepsea-directories:
   file.directory:
     - names:
        - /etc/salt/master.d
@@ -42,7 +35,7 @@ deepsea-software:
     - gpgcheck: 1
     - gpgautoimport: True
     - require:
-      - file: deepsea-requirements
+      - file: deepsea-directories
   pkg.installed:
     - pkgs: {{ deepsea.packages.required }}
     - require:
@@ -72,7 +65,7 @@ deepsea-software:
     - cwd: {{ deepsea.tmpdir }}/DeepSea
    {% endif %}
     - require:
-      - file: deepsea-requirements
+      - file: deepsea-directories
       - pkgrepo: deepsea-software
     - require_in:
       - file: deepsea-config-global
