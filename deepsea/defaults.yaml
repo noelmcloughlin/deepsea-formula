@@ -27,11 +27,16 @@ deepsea:
     dev_env: True
 
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
-    formula: False
+    # Should this formula manage package dependencies? True means yes; False NO.
+    # Ideally `DeepSea` (or `packages-formula`) should handle package dependencies.
+    managed: False
     required:
       - python-setuptools
+      - python3-boto
+      - python3-rados
+      - lsscsi
+      - jq
+      - pciutils
       - salt-api
       - git
       - make
-

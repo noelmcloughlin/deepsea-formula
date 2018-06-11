@@ -16,16 +16,17 @@ Suse:
     dead:
       - apparmor
       - SuSEfirewall2
+  packages:
+    required:
+      - gptfdisk
+      - iperf
+      - lsof
 
 Debian:
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
-    formula: False
     required:
-      - python-setuptools
-      - python-click
-      - python-tox
-      - salt-api
+      - gdisk
+      - iperf
 
 RedHat:
   services:
@@ -33,10 +34,12 @@ RedHat:
       - ntpd
       - salt-minion
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
-    formula: False
     required:
-      - python-setuptools
       - python-click
       - python-tox
-      - salt-api
+      - python-netaddr
+      - iperf3
+      - gdisk
+      - lshw
+      - hwinfo
+
