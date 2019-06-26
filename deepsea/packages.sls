@@ -3,8 +3,6 @@
 
 {% from "deepsea/map.jinja" import deepsea with context -%}
 
-   {% if deepsea.packages.managed %}
-
 deepsea-packages-common-dependencies:
   pkg.installed:
     - pkgs:
@@ -12,5 +10,3 @@ deepsea-packages-common-dependencies:
       {% for pkg in deepsea.packages.required %}
       - {{ pkg }}
       {% endfor %}
-
-   {% endif %}

@@ -1,7 +1,8 @@
 deepsea:
-  release: luminous
-  # clone software from git (default)
+  release: nautilus
+  # clone software from git (default: True)
   use_upstream_gitrepo: True
+  # or use a package repo (default: False)
   use_upstream_pkgrepo: False
   dev_env: False
 
@@ -14,5 +15,8 @@ deepsea:
     dev_env: False
 
   packages:
-    # Set True if https://github.com/saltstack-formulas/packages-formula is used/preferred
+    # Manage dependency packages with https://github.com/saltstack-formulas/packages-formula
     formula: False
+    # Manage packages with this formula
+    managed: True
+    required: []

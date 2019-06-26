@@ -21,12 +21,17 @@ Suse:
       - gptfdisk
       - iperf
       - lsof
+      - python3-setuptools
+      - python3-click
+      - python3-tox
+      - python3-configobj
 
 Debian:
   packages:
     required:
       - gdisk
       - iperf
+      - python-tox
 
 RedHat:
   services:
@@ -35,6 +40,8 @@ RedHat:
       - salt-minion
   packages:
     required:
+      - python-setuptools
+      - python-configobj
       - python-click
       - python-tox
       - python-netaddr
@@ -42,4 +49,3 @@ RedHat:
       - gdisk
       - lshw
       - hwinfo
-

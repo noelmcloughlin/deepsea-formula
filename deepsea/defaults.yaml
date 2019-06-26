@@ -27,15 +27,16 @@ deepsea:
     dev_env: True
 
   packages:
-    # Should this formula manage package dependencies? True means yes; False NO.
-    # Ideally `DeepSea` (or `packages-formula`) should handle package dependencies.
+    # should formula manage package dependencies? True means yes; False NO.
+    # ideally `DeepSea` (or `packages-formula`) handle package dependencies.
     managed: False
     required:
       - python-setuptools
+      - python3
       - python3-boto
       - python3-rados
       - lsscsi
-      - jq
+      - jq     # needs epel on centos
       - pciutils
       - salt-api
       - git

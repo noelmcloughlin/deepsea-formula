@@ -23,10 +23,11 @@ deepsea-directories:
        - user
        - group
        - mode
+    - require_in:
+      - file: deepsea-software
 
 deepsea-software:
    {% if deepsea.use_upstream_pkgrepo %}
-        {# using upstream pkgrepo #}
   pkgrepo.managed:
     - name: deepsea-{{ deepsea.release }}
     - humanname: {{ deepsea.repo.name }}
@@ -37,11 +38,12 @@ deepsea-software:
     - require:
       - file: deepsea-directories
   pkg.installed:
-    - pkgs: {{ deepsea.packages.required }}
-    - require:
-      - pkgrepo: deepsea-software
+    - name: deepsea
+
    {% else %}
-        {# using gitrepo not upstream pkgrepo #}
+
+  pkg.installed:
+    - name: make
   pkgrepo.absent:
     - name: deepsea-{{ deepsea.release }}
     - require_in:
@@ -66,6 +68,7 @@ deepsea-software:
    {% endif %}
     - require:
       - file: deepsea-directories
+      - pkg: deepsea-software
       - pkgrepo: deepsea-software
     - require_in:
       - file: deepsea-config-global
