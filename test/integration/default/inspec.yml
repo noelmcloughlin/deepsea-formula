@@ -1,0 +1,12 @@
+name: deepsea
+title: deepsea Formula
+maintainer: Saltstack Formulas Community
+license: Apache-2.0
+summary: Verify that the deepsea formula is setup and configured correctly
+supports:
+  - platform-name: debian
+  - platform-name: ubuntu
+  - platform-name: centos
+  - platform-name: fedora
+  - platform-name: opensuse
+  - platform-name: freebsd

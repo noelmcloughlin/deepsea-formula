@@ -1,42 +1,63 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-
-Suse:
-  use_upstream_pkgrepo: False
-  use_upstream_gitrepo: True
-  repo:
-    name: 'Filesystem tools and FUSE-related packages (openSUSE_Leap_$releasever)'
-    base_url: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_$releasever/$basearch'
-    key_url: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_42.3/repodata/repomd.xml.key'
-  user: salt
-  group: salt
-  services:
-    running:
-      - salt-minion
-    dead:
-      - apparmor
-      - SuSEfirewall2
-  packages:
-    required:
-      - gptfdisk
-      - iperf
-      - lsof
+#
+# Setup variables using grains['os_family'] based logic.
+# You just need to add the key:values for an `os_family` that differ
+# from `defaults.yaml`.
+# Only add an `os_family` which is/will be supported by the formula
+#
+# If you do not need to provide defaults via the `os_family` grain,
+# you will need to provide at least an empty dict in this file, e.g.
+# osfamilymap: {}
+---
 
 Debian:
-  packages:
-    required:
+  pkg:
+    deps:
+      - python3-tox
       - gdisk
       - iperf
 
 RedHat:
-  services:
-    running:
-      - ntpd
-      - salt-minion
-  packages:
-    required:
+  service:
+    name: deepsea
+    enabled: False
+  pkg:
+    deps:
       - python3-netaddr
       - iperf3
       - gdisk
       - lshw
       - hwinfo
+
+Suse:
+  pkg:
+    use_upstream_repo: True
+    deps:
+      - python3-tox
+      - gptfdisk
+      - iperf
+      - lsof
+    repo:
+      name: 'Filesystem tools and FUSE-related packages (openSUSE_Leap_$releasever)'
+      humanname: 'Filesystem tools and FUSE-related packages'
+      baseurl: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_$releasever/$basearch'
+      gpgkey: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_42.3/repodata/repomd.xml.key'
+      gpgcheck: 1
+      gpgautoimport: True
+  service:
+    dead:
+      - apparmor
+      - SuSEfirewall2
+
+Gentoo: {}
+
+Arch: {}
+
+Alpine: {}
+
+FreeBSD: {}
+
+OpenBSD: {}
+
+MacOS: {}

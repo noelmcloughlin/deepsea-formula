@@ -5,7 +5,6 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import deepsea with context %}
 
-include:
-  - {{ '.source' if deepsea.pkg.use_upstream_source else '.package' }}
-  - .config
-  - .service
+deepsea-package-repo-clean-pkgrepo-absent:
+  pkgrepo.absent:
+    - name: {{ deepsea.pkg.repo.name }}
