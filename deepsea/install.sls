@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 
-{% from "deepsea/map.jinja" import deepsea with context -%}
+{%- from "deepsea/map.jinja" import deepsea with context %}
 
 include:
   - deepsea.config
   - deepsea.service
-   {% if deepsea.packages.managed %}
-  - deepsea.packages
-   {% endif %}
 
 deepsea-directories:
   file.directory:
@@ -26,8 +23,18 @@ deepsea-directories:
     - require_in:
       - file: deepsea-software
 
+   {%- if deepsea.packages.managed and deepsea.packages.required %}
+deepsea-packages-common-dependencies:
+  pkg.installed:
+    - pkgs:
+      - make
+      - {{ deepsea.packages.required|json }}
+    - require_in:
+      - cmd: deepsea-software
+   {% endif %}
+
 deepsea-software:
-   {% if deepsea.use_upstream_pkgrepo %}
+   {%- if deepsea.use_upstream_pkgrepo %}
   pkgrepo.managed:
     - name: deepsea-{{ deepsea.release }}
     - humanname: {{ deepsea.repo.name }}
@@ -40,10 +47,8 @@ deepsea-software:
   pkg.installed:
     - name: deepsea
 
-   {% else %}
+   {%- else %}
 
-  pkg.installed:
-    - name: make
   pkgrepo.absent:
     - name: deepsea-{{ deepsea.release }}
     - require_in:
@@ -65,10 +70,13 @@ deepsea-software:
   cmd.run:
     - name: make install
     - cwd: {{ deepsea.tmpdir }}/DeepSea
-   {% endif %}
+   {%- endif %}
+    - require_in:
+      - file: deepsea-config-global
     - require:
       - file: deepsea-directories
       - pkg: deepsea-software
       - pkgrepo: deepsea-software
-    - require_in:
-      - file: deepsea-config-global
+             {%- if deepsea.packages.managed and deepsea.packages.required %}
+      - pkg: deepsea-packages-common-dependencies
+             {%- endif %}

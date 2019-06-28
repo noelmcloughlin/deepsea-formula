@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 
-{% from "deepsea/map.jinja" import deepsea with context %}
+{%- from "deepsea/map.jinja" import deepsea with context %}
 
 deepsea-cleanup:
   file.absent:

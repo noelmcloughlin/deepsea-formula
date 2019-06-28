@@ -31,10 +31,12 @@ deepsea:
     # ideally `DeepSea` (or `packages-formula`) handle package dependencies.
     managed: False
     required:
-      - python-setuptools
-      - python3
+      - python3-setuptools
       - python3-boto
+      - python3-configobj
+      - python3-click
       - python3-rados
+      - python3-tox
       - lsscsi
       - jq     # needs epel on centos
       - pciutils
