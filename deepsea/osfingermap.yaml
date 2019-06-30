@@ -20,3 +20,14 @@ Debian-8:
   pkg:
     deps:
       - python-rados
+
+# os: CentOS
+CentOS-7:
+  pkg:
+    deps:
+      - python36-netaddr
+
+CentOS-8:
+  pkg:
+    deps:
+      - python36-netaddr

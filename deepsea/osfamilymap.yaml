@@ -27,7 +27,6 @@ RedHat:
   pkg:
     deps:
       - python-boto3
-      - python3-netaddr
       - iperf3
       - gdisk
       - lshw

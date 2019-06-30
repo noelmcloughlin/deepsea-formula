@@ -20,6 +20,7 @@ Fedora:
   pkg:
     deps:
       - python3-boto
+      - python3-netaddr
       - python3-tox
 
 CentOS: {}
