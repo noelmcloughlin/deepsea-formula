@@ -29,11 +29,13 @@ platforms:
       image: netmanagers/salt-develop-py3:centos-7
       provision_command:
         - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
+        - yum install make -y
         - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
   - name: fedora-29-develop-py3
     driver:
       image: netmanagers/salt-develop-py3:fedora-29
       provision_command:
+        - yum install make -y
         - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
         - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
   - name: opensuse-leap-15-develop-py3

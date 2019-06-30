@@ -11,8 +11,15 @@
 # osfingermap: {}
 ---
 # os: Debian
-Debian-9: {}
-Debian-8: {}
+Debian-9:
+  pkg:
+    deps:
+      - python-rados
+
+Debian-8:
+  pkg:
+    deps:
+      - python-rados
 
 # os: CentOS
 CentOS-7:

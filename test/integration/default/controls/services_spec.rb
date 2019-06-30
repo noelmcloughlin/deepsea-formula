@@ -7,8 +7,4 @@ control 'salt-minion service' do
     it { should be_running }
   end
 
-  describe command('service salt-minion status') do
-   its('stdout') { should match 'running' }
-    its('exit_status') { should eq 0 }
-  end
 end
