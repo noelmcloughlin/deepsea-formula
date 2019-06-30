@@ -4,7 +4,7 @@
 deepsea:
   version: '12.1.5'
   pkg:
-    use_upstream_source: False
+    use_upstream_source: True
     archive:
       uri: https://dl.deepsea.com/oss/release
 
