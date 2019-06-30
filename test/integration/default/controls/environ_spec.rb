@@ -7,6 +7,6 @@ control 'deepsea configuration environment' do
     it { should be_grouped_into 'root' }
     its('mode') { should cmp '0640' }
     its('content') { should include 'Your changes may be overwritten' }
-    its('content') { should include 'export DEV_ENV=' }
+    #its('content') { should include 'export DEV_ENV=' }
   end
 end

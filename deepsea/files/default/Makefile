@@ -966,7 +966,7 @@ copy-files:
 
 install-deps:
 	# Using '|| true' to suppress failure (packages already installed, etc)
-        $(SET_PYTHON) 2>/dev/null || true
+	$(SET_PYTHON) 2>/dev/null || true
 	$(PKG_INSTALL) $(DEEPSEA_DEPS) || true
 	$(PKG_INSTALL) $(PYTHON_DEPS) || true
 
