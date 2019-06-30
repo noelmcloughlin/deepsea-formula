@@ -7,38 +7,36 @@ PYTHON_DEPS=python3-setuptools python3-click python3-tox python3-configobj
 PYTHON=python3
 SET_PYTHON=true
 
-## SUSE ##
 OS=$(shell source /etc/os-release 2>/dev/null ; echo $$ID)
 suse=
 ifneq (,$(findstring opensuse,$(OS)))
-  suse=yes
+suse=yes
 endif
 ifeq ($(OS), sles)
-  suse=yes
+suse=yes
 endif
 ifeq ($(suse), yes)
-  USER=salt
-  GROUP=salt
-  PKG_INSTALL=zypper -n install
+USER=salt
+GROUP=salt
+PKG_INSTALL=zypper -n install
 else
-  ## NON-SUSE ##
-  USER=root
-  GROUP=root
-  ifeq ($(OS), centos)
-     PKG_INSTALL=yum install -y
-     PYTHON_DEPS=rh-python36-setuptools python36-click tox python36-configobj
-  else
-    ifeq ($(OS), fedora)
-       PKG_INSTALL=yum install -y
-    else
-      debian := $(wildcard /etc/debian_version)
-      ifneq ($(strip $(debian)),)
-        SET_PYTHON=rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
-        PKG_INSTALL=apt-get install -y
-        PYTHON_DEPS=python3-setuptools python3-click tox python3-configobj
-      endif
-    endif
-  endif
+USER=root
+GROUP=root
+ifeq ($(OS), centos)
+PKG_INSTALL=yum install -y
+PYTHON_DEPS=rh-python36-setuptools python36-click tox python36-configobj
+else
+ifeq ($(OS), fedora)
+PKG_INSTALL=yum install -y
+else
+debian := $(wildcard /etc/debian_version)
+ifneq ($(strip $(debian)),)
+PKG_INSTALL=apt-get install -y
+SET_PYTHON=rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+PYTHON_DEPS=python3-setuptools python3-click tox python3-configobj
+endif
+endif
+endif
 endif
 
 
@@ -968,7 +966,7 @@ copy-files:
 
 install-deps:
 	# Using '|| true' to suppress failure (packages already installed, etc)
-	$(SET_PYTHON) 2>/dev/null || true
+        $(SET_PYTHON) 2>/dev/null || true
 	$(PKG_INSTALL) $(DEEPSEA_DEPS) || true
 	$(PKG_INSTALL) $(PYTHON_DEPS) || true
 
