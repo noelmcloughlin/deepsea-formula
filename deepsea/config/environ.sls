@@ -24,6 +24,6 @@ deepsea-config-file-file-managed-environ_file:
     - makedirs: True
     - template: jinja
     - context:
-        config: {{ deepsea.environ }}
+        config: {{ deepsea.environ|yaml }}
     - require:
       - sls: {{ sls_source_install if deepsea.pkg.use_upstream_source else sls_package_install }}
