@@ -5,6 +5,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import deepsea with context %}
 {%- from tplroot ~ "/jinja/macros.jinja" import format_kwargs with context %}
+{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 deepsea-package-source-install-file-directory:
   file.directory:
@@ -41,11 +42,20 @@ deepsea-package-source-install-source-extracted:
     - recurse:
         - user
         - group
+  file.managed:
+    - name: {{ deepsea.pkg.source.name }}/Makefile
+    - source: {{ files_switch(['Makefile'], lookup='deepsea-package-source-install-source-extracted') }}
 
 deepsea-package-source-install-cmd-run-make-install:
+  file.replace:
+    - name: /usr/bin/salt-api
+    - pattern: '/usr/bin/python2'
+    - repl: '/usr/bin/python3'
+    - onlyif: test -x /usr/bin/salt-api
   cmd.run:
     - cwd: {{ deepsea.pkg.source.name }}
-    - name: make install
+    - names:
+      - make install
     - unless:
       - test -f /usr/local/bin/deepsea
     - require:

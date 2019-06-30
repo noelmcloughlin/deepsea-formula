@@ -14,7 +14,9 @@
 Debian:
   pkg:
     deps:
-      - python3-tox
+      - python3-boto3
+      - python3-rados
+      - tox
       - gdisk
       - iperf
 
@@ -24,6 +26,7 @@ RedHat:
     enabled: False
   pkg:
     deps:
+      - python-boto3
       - python3-netaddr
       - iperf3
       - gdisk
@@ -35,6 +38,8 @@ Suse:
     use_upstream_repo: True
     deps:
       - python3-tox
+      - python3-boto3
+      - python3-rados
       - gptfdisk
       - iperf
       - lsof
@@ -52,11 +57,26 @@ Suse:
 
 Gentoo: {}
 
-Arch: {}
+Arch:
+  pkg:
+    deps:
+      - python-tox
+      - python-boto3
+      - python3-rados
 
 Alpine: {}
 
-FreeBSD: {}
+FreeBSD:
+  pkg:
+    deps:
+      - py36-boto3
+      - py36-tox
+
+NetBSD:
+  pkg:
+    deps:
+      - py36-boto3
+      - py36-tox
 
 OpenBSD: {}
 

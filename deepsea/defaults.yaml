@@ -7,9 +7,6 @@ deepsea:
   pkg:
     name: deepsea
     deps:
-      - python3-boto
-      - python3-rados
-      - python3-tox
       - lsscsi
       - jq
       - pciutils
