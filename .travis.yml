@@ -4,13 +4,14 @@ stages:
   - name: release
     if: branch = master AND type != pull_request
 
-dist:xenial
 sudo: required
 cache: bundler
 language: ruby
 
 services:
   - docker
+
+dist:xenial
 
 # Make sure the instances listed below match up with
 # the `platforms` defined in `kitchen.yml`
