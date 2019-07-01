@@ -11,7 +11,7 @@ language: ruby
 services:
   - docker
 
-dist:xenial
+dist: xenial
 
 # Make sure the instances listed below match up with
 # the `platforms` defined in `kitchen.yml`
