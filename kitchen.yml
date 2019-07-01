@@ -44,6 +44,7 @@ platforms:
       provision_command:
         - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
         - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+        - zypper -n in tar gzip
       run_command: /usr/lib/systemd/systemd
 
   ## SALT 2019.2
@@ -62,6 +63,8 @@ platforms:
   - name: opensuse-leap-15-2019-2-py3
     driver:
       image: netmanagers/salt-2019.2-py3:opensuse-leap-15
+      provision_command:
+        - zypper -n in tar gzip
       run_command: /usr/lib/systemd/systemd
 
   ## SALT 2018.3
@@ -86,6 +89,8 @@ platforms:
   - name: opensuse-leap-42-2018-3-py2
     driver:
       image: netmanagers/salt-2018.3-py2:opensuse-leap-42
+      provision_command:
+        - zypper -n in tar gzip
       run_command: /usr/lib/systemd/systemd
 
   ## SALT 2017.7
@@ -106,6 +111,8 @@ platforms:
   - name: opensuse-leap-42-2017-7-py2
     driver:
       image: netmanagers/salt-2017.7-py2:opensuse-leap-42
+      provision_command:
+        - zypper -n in tar gzip
       run_command: /usr/lib/systemd/systemd
 
 provisioner:

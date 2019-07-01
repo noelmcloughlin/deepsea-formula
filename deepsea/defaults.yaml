@@ -11,6 +11,8 @@ deepsea:
       - jq
       - pciutils
       - salt-api
+      - tar
+      - gzip
     use_upstream_repo: False
     use_upstream_source: True
     repo:
