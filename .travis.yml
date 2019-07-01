@@ -4,6 +4,7 @@ stages:
   - name: release
     if: branch = master AND type != pull_request
 
+dist:xenial
 sudo: required
 cache: bundler
 language: ruby
