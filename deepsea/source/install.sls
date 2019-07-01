@@ -45,6 +45,8 @@ deepsea-package-source-install-source-extracted:
   file.managed:
     - name: {{ deepsea.pkg.source.name }}/Makefile
     - source: {{ files_switch(['Makefile'], lookup='deepsea-package-source-install-source-extracted') }}
+  pkg.installed:
+    - name: make
 
 deepsea-package-source-install-cmd-run-make-install:
   file.replace:
@@ -60,3 +62,6 @@ deepsea-package-source-install-cmd-run-make-install:
       - test -f /usr/local/bin/deepsea
     - require:
       - archive: deepsea-package-source-install-source-extracted
+      - pkg: deepsea-package-source-install-source-extracted
+      - file: deepsea-package-source-install-source-extracted
+      - file: deepsea-package-source-install-cmd-run-make-install
