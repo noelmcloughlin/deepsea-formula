@@ -978,6 +978,12 @@ install: pyc install-deps copy-files
 	# Use '|| true' to suppress some error output in corner cases
 	systemctl restart salt-master
 	systemctl restart salt-api
+	if (( $? > 0 ))
+	then
+	    cp /usr/bin/salt-api /usr/bin/salt-api.orig 2>/dev/null
+	    sed 's#\/usr\/bin\/python2#/usr/bin/python3#' /usr/bin/salt-api.orig > /usr/bin/salt-api 2>/dev/null
+	    systemctl restart salt-api
+	fi
 	# deepsea-cli
 	$(PYTHON) setup.py install --root=$(DESTDIR)/
 
