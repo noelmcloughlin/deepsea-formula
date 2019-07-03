@@ -1,42 +1,47 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
-
+---
 deepsea:
-  release: luminous
-  package: deepsea
-  use_upstream_pkgrepo: False
-  use_upstream_gitrepo: True
-  tmpdir: /tmp/deepsea_tmp
-  user: root
-  group: root
-
-  repo:
-    base_uri:
-    base_url:
-    git_url: https://github.com/SUSE/DeepSea.git
-    git_rev: master
- 
-  services:
-    running:
-      - salt-minion
-    dead:
-      - apparmor
-
-  config:
-    global: /srv/pillar/ceph/stack/global.yml
-    dev_env: True
-
-  packages:
-    # Should this formula manage package dependencies? True means yes; False NO.
-    # Ideally `DeepSea` (or `packages-formula`) should handle package dependencies.
-    managed: False
-    required:
-      - python-setuptools
-      - python3-boto
-      - python3-rados
+  dir: /usr/local
+  version: '0.9.22'
+  pkg:
+    name: deepsea
+    deps:
       - lsscsi
       - jq
       - pciutils
       - salt-api
-      - git
-      - make
+      - tar
+      - gzip
+    use_upstream_repo: False
+    use_upstream_source: True
+    repo:
+      comments:
+        - installed by salt
+    source:
+      name: /tmp/deepsea
+      uri: 'https://github.com/SUSE/DeepSea/archive/'
+      source: None
+      source_hash: 88faf687a56060bf08da6ec3cf26917351e843efc4de0489139391d7e6985733  #linux amd64 tarball
+      trim_output: True   {# works in 2018.3.2. onwards #}
+      archive_suffix: tar.gz
+      archive_format: tar
+      enforce_toplevel: False
+      options: '--strip-components=1'
+
+  kernel: ''
+  arch: ''
+  rootgroup: root
+  environ_file: /etc/default/deepsea.sh
+  environ:
+    export DEV_ENV=False
+    
+  service:
+    user: salt
+    group: salt
+    name: salt-minion
+    dead: []
+
+  linux:
+    #'Alternatives system' priority: zero disables (default)
+    altpriority: 0

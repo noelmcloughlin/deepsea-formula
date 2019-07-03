@@ -1,25 +1,42 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-{% import_yaml 'deepsea/defaults.yaml' as defaults %}
-{% import_yaml 'deepsea/osfamilymap.yaml' as osfamilymap %}
+{#- Get the `tplroot` from `tpldir` #}
+{%- set tplroot = tpldir.split('/')[0] %}
+{#- Start imports as #}
+{%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
+{%- import_yaml tplroot ~ "/osfamilymap.yaml" as osfamilymap %}
+{%- import_yaml tplroot ~ "/osfingermap.yaml" as osfingermap %}
+{%- import_yaml tplroot ~ "/osmap.yaml" as osmap %}
 
-{## Use grains['grain'] based logic to build config model ##}
+{#- Retrieve the config dict only once #}
+{#- set _config = salt['config.get'](tplroot, default={}) #}
+{%- set _config = {} %}
 
-{% set deepsea = salt['grains.filter_by'](
-    defaults,
-    merge=salt['grains.filter_by'](
-        osfamilymap,
-        grain='os_family',
-        merge=salt['grains.filter_by'](
-             {
-             'Power': { 'myarch': '_Power', },
-             'default': { 'repoarch': ''},
-             },
-             grain='osarch',
-             merge=salt['pillar.get']('deepsea', {}),
-        ),
-    ),
-    base='deepsea',
-) %}
+{%- set defaults = salt['grains.filter_by']( default_settings,
+      default=tplroot,
+      merge=salt['grains.filter_by']( osfamilymap, grain='os_family',
+        merge=salt['grains.filter_by']( osmap, grain='os',
+          merge=salt['grains.filter_by']( osfingermap, grain='osfinger',
+            merge=salt['grains.filter_by']( _config, default='lookup'
+            )
+          )
+        )
+      )
+    )
+ %}
 
+{#- Merge the deepsea pillar #}
+{%- set deepsea = salt['pillar.get']('deepsea', default=defaults, merge=True) %}
+
+{#- source jinja #}
+{%- if deepsea.pkg.use_upstream_source %}
+    {%- set name = 'v%s'|format(deepsea.version) %}
+    {%- set uri = deepsea.pkg.source.uri + '/' + name %}
+    {%- do deepsea.pkg.source.update({
+           'name':           deepsea.pkg.source.name + '/' + 'DeepSea-' + name,
+           'source':         uri + '.' + deepsea.pkg.source.archive_suffix,
+           'archive_format': deepsea.pkg.source.archive_format
+    }) %}
+    {%- do deepsea.update({'base_dir': deepsea.pkg.source.name}) %}
+{%- endif %}
