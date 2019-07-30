@@ -16,7 +16,7 @@ include:
 
 deepsea-package-install-deps-pkg-removed:
   pkg.removed:
-    - names: {{ deepsea.pkg.deps }}
+    - names: {{ deepsea.pkg.deps|json }}
 
     {%- endif %}
 
