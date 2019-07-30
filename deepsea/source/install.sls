@@ -60,5 +60,4 @@ deepsea-package-source-install-cmd-run-make-install:
     - require:
       - archive: deepsea-package-source-install-source-extracted
       - pkg: deepsea-package-source-install-source-extracted
-      - file: deepsea-package-source-install-source-extracted
       - file: deepsea-package-source-install-cmd-run-make-install
