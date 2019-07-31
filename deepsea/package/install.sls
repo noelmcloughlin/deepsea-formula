@@ -14,7 +14,7 @@ include:
 
 deepsea-package-install-deps-pkg-installed:
   pkg.installed:
-    - names: {{ deepsea.pkg.deps }}
+    - names: {{ deepsea.pkg.deps|json }}
 
       {%- endif %}
 

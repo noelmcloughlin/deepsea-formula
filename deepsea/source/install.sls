@@ -24,7 +24,7 @@ deepsea-package-source-install-file-directory:
         - mode
     {%- if deepsea.pkg.deps %}
   pkg.installed:
-    - names: {{ deepsea.pkg.deps }}
+    - names: {{ deepsea.pkg.deps|json }}
     - require_in:
       - archive: deepsea-package-source-install-source-extracted
     {%- endif %}
@@ -42,9 +42,6 @@ deepsea-package-source-install-source-extracted:
     - recurse:
         - user
         - group
-  file.managed:
-    - name: {{ deepsea.pkg.source.name }}/Makefile
-    - source: {{ files_switch(['Makefile'], lookup='deepsea-package-source-install-source-extracted') }}
   pkg.installed:
     - name: make
 
@@ -63,5 +60,4 @@ deepsea-package-source-install-cmd-run-make-install:
     - require:
       - archive: deepsea-package-source-install-source-extracted
       - pkg: deepsea-package-source-install-source-extracted
-      - file: deepsea-package-source-install-source-extracted
       - file: deepsea-package-source-install-cmd-run-make-install
