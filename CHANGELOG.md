@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/saltstack-formulas/deepsea-formula/compare/v0.2.0...v0.2.1) (2019-07-31)
+
+
+### Bug Fixes
+
+* **archlinux:** no python rados package; fix requisite ([2212491](https://github.com/saltstack-formulas/deepsea-formula/commit/2212491))
+* **jinja:** json filter & use upstream makefile ([76ce0fc](https://github.com/saltstack-formulas/deepsea-formula/commit/76ce0fc))
+
 # [0.2.0](https://github.com/saltstack-formulas/deepsea-formula/compare/v0.1.0...v0.2.0) (2019-07-08)
 
 
