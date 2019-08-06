@@ -23,7 +23,7 @@ Debian:
 RedHat:
   service:
     name: deepsea
-    enabled: False
+    enabled: false
   pkg:
     deps:
       # python-boto3
@@ -34,7 +34,7 @@ RedHat:
 
 Suse:
   pkg:
-    use_upstream_repo: True
+    use_upstream_repo: true
     deps:
       - python3-tox
       # python3-boto3
@@ -45,10 +45,12 @@ Suse:
     repo:
       name: 'Filesystem tools and FUSE-related packages (openSUSE_Leap_$releasever)'
       humanname: 'Filesystem tools and FUSE-related packages'
+      # yamllint disable rule:line-length
       baseurl: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_$releasever/$basearch'
       gpgkey: 'http://download.opensuse.org/repositories/filesystems/openSUSE_Leap_42.3/repodata/repomd.xml.key'
+      # yamllint enable rule:line-length
       gpgcheck: 1
-      gpgautoimport: True
+      gpgautoimport: true
   service:
     dead:
       - apparmor

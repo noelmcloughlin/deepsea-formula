@@ -4,7 +4,7 @@
 deepsea:
   version: '0.9.22'
   pkg:
-    use_upstream_source: True
+    use_upstream_source: true
     archive:
       uri: https://dl.deepsea.com/oss/release
 
@@ -38,12 +38,10 @@ deepsea:
     # dirs:
     #   files: files_alt
     #   default: default_alt
-    # source_files:
-    #   deepsea-config-file-file-managed:
-    #     - 'example_alt.tmpl'
-    #     - 'example_alt.tmpl.jinja'
+    source_files:
+      deepsea-config-file-file-managed:
+        - 'alt_environ.sh.jinja'
 
   linux:
-    #'Alternatives system' priority: zero disables (default)
+    # 'Alternatives system' priority: zero disables (default)
     altpriority: 1000
-
