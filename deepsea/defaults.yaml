@@ -13,8 +13,8 @@ deepsea:
       - salt-api
       - tar
       - gzip
-    use_upstream_repo: False
-    use_upstream_source: True
+    use_upstream_repo: false
+    use_upstream_source: true
     repo:
       comments:
         - installed by salt
@@ -22,11 +22,12 @@ deepsea:
       name: /tmp/deepsea
       uri: 'https://github.com/SUSE/DeepSea/archive/'
       source: None
-      source_hash: 88faf687a56060bf08da6ec3cf26917351e843efc4de0489139391d7e6985733  #linux amd64 tarball
-      trim_output: True   {# works in 2018.3.2. onwards #}
+      # linux amd64 tarball
+      source_hash: 88faf687a56060bf08da6ec3cf26917351e843efc4de0489139391d7e6985733
+      trim_output: true  # works in 2018.3.2. onwards
       archive_suffix: tar.gz
       archive_format: tar
-      enforce_toplevel: False
+      enforce_toplevel: false
       options: '--strip-components=1'
 
   kernel: ''
@@ -35,7 +36,7 @@ deepsea:
   environ_file: /etc/default/deepsea.sh
   environ:
     export DEV_ENV=False
-    
+
   service:
     user: salt
     group: salt
@@ -43,5 +44,5 @@ deepsea:
     dead: []
 
   linux:
-    #'Alternatives system' priority: zero disables (default)
+    # 'Alternatives system' priority: zero disables (default)
     altpriority: 0
