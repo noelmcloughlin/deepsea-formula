@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`0.3.0 <https://github.com/saltstack-formulas/deepsea-formula/compare/v0.2.1...v0.3.0>`_ (2019-08-17)
+---------------------------------------------------------------------------------------------------------
+
+Features
+^^^^^^^^
+
+
+* **yamllint:** include for this repo and apply rules throughout (\ `e9c195f <https://github.com/saltstack-formulas/deepsea-formula/commit/e9c195f>`_\ )
+
 `0.2.1 <https://github.com/saltstack-formulas/deepsea-formula/compare/v0.2.0...v0.2.1>`_ (2019-07-31)
 ---------------------------------------------------------------------------------------------------------
 
